@@ -16,21 +16,21 @@ from textwrap import dedent
 
 
 def find_nouns(content):
-    # content = "I the {Adjective} and {Noun} {A First Name} have {Past Tense Verb}{A First Name}'s {Adjective}"
     try:
+        nouns_list = []
         start = content.find('{')
         end = content.find('}')
-        noun = content[start+1:end] 
-        print(noun)
         while start > -1: 
+            noun = content[start+1:end]             
+            nouns_list.append(noun)
             start = content.find('{',end)
             end = content.find('}',start)     
-            noun = content[start+1:end]
-            if start < 0: break
-            print(noun)
+            noun = content[start+1:end]            
+            if start < 0: break       
+            
+        return nouns_list
     except Exception as e:
         print("Error trying to find the nouns on the file.", e)
-
 
 
 def read_file(path_file_to_read):
@@ -46,7 +46,8 @@ def read_file(path_file_to_read):
 def do_game(path_file_to_read):
     try:
         content = read_file(path_file_to_read)
-        find_nouns(content)
+        nouns = find_nouns(content)
+        print('the nouns are', nouns)
     except:
         print("Error on doing the game.")
     
