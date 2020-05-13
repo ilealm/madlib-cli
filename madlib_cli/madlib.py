@@ -3,8 +3,8 @@ from textwrap import dedent
 # steps
 # print welcome message: done
 # read template: done
-# find all the diferents nouns inside {}, store them in a dictionaty with order. AKA nouns
-# for each element in the noun dictonary, ask for user imput and store as a value.
+# find all the diferents nouns inside {}, store them in a dictionaty with order. AKA nouns: done
+# for each element in the noun dictonary, ask for user imput and store as a value.: DONE
 # populate the template with the user input. Using .format(list of values)
 # myorder = "I want {} pieces of item {} for {} dollars."
 # print(myorder.format(quantity, itemno, price))
@@ -13,9 +13,26 @@ from textwrap import dedent
 # write the compled script on the new file
 
 
+def ask_nouns(nouns_list):
+    answer_list = []
+    try:
+        i = 1
+        total_nouns = len(nouns_list)
+        for noun in nouns_list:
+            print(str(i) + "/" + str(total_nouns),  "Please enter a:", noun)
+            answer = input()
+            answer_list.append(answer)
+            i+=1
 
+        print("\n1Thank you! now let's see your file!!!")
+        
+        return answer_list
+    except Exception as e:
+        print("Error on asking nouns to the user.", e)
 
 def find_nouns(content):
+    # TODO:comment this list
+    content = "I the {Adjective} and {Noun} {A First Name} have {Past Tense Verb}{A First Name}'s {Adjective}"
     try:
         nouns_list = []
         start = content.find('{')
@@ -47,7 +64,8 @@ def do_game(path_file_to_read):
     try:
         content = read_file(path_file_to_read)
         nouns = find_nouns(content)
-        print('the nouns are', nouns)
+        # print('the nouns are', nouns)
+        answers = ask_nouns(nouns)
     except:
         print("Error on doing the game.")
     
