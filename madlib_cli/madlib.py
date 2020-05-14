@@ -5,12 +5,35 @@ from textwrap import dedent
 # read template: done
 # find all the diferents nouns inside {}, store them in a dictionaty with order. AKA nouns: done
 # for each element in the noun dictonary, ask for user imput and store as a value.: DONE
-# populate the template with the user input. Using .format(list of values)
-# myorder = "I want {} pieces of item {} for {} dollars."
-# print(myorder.format(quantity, itemno, price))
-# display completed script on terminal
-# create a new file
-# write the compled script on the new file
+# populate the template with the user input. DONE.
+# display completed script on terminal DONE.
+# create a new file: DONE
+# write the compled script on the new file: DONE
+
+def save_to_new_file(merged_content):
+    try:
+        path_file_to_save = "assets/parsed_file.txt"
+        # TODO: overwite the file if exists
+        with open(path_file_to_save, "a") as new_file:
+            new_file.write(merged_content)
+            new_file.write("\n")
+
+        print("\nThe new file had been saved to the project.")
+    except Exception as e:
+        print('Error trying to save the content in a new file.', e)
+
+
+def show_merged_content(merged_content):
+    msg = """
+    //////////////////////////////////////////
+    ////                                  ////
+    ////     This is your new file !!!    ////
+    ////                                  ////
+    //////////////////////////////////////////
+    """
+    print(msg)    
+    print(merged_content)
+
 
 def merge_file(content,nouns_list,answer_list):
     try:
@@ -22,9 +45,11 @@ def merge_file(content,nouns_list,answer_list):
     except Exception as e:
         print('Error on merging the file.', e)
 
+
 def ask_nouns(nouns_list):
     answer_list = []
     try:
+        print('Now, enter your game words.... \n')
         i = 1
         total_nouns = len(nouns_list)
         for noun in nouns_list:
@@ -64,26 +89,7 @@ def read_file(path_file_to_read):
         return contents
     except:
         print('Error on reading the file')
-    
-    
-
-def do_game(path_file_to_read):
-    try:
-        # content = read_file(path_file_to_read)
-        # TODO:comment this list
-        content = "I the {Adjective} and {Noun} {A First Name} have {Past Tense Verb} {A First Name}'s {Adjective}"
-        nouns = find_nouns(content)
-        # print('the nouns are', nouns)
-        # TODO: UNCOMMENT THIS LINE:
-        # answers = ask_nouns(nouns)
-        answers = ['strong','chair','Ian','was','Emma','nice']
-        # print('answers are', answers)
-        merged_content = merge_file(content,nouns,answers)
-        # print(merged_content)
-    except:
-        print("Error on doing the game.")
-    
-
+        
 
 def show_welcome():
     welcome_msg = """
@@ -98,9 +104,26 @@ def show_welcome():
     
     Enjoy!
     """
-    print(welcome_msg)
+    print(welcome_msg)    
+    
 
-if __name__ == "__main__":
-    path_file_to_read = "assets/script_one.txt"
-    # show_welcome()
+def do_game(path_file_to_read):
+    try:
+        # content = "I the {Adjective} and {Noun} {A First Name} have {Past Tense Verb} {A First Name}'s {Adjective}"
+        # answers = ['strong','chair','Ian','was','Emma','nice']
+        
+        show_welcome()
+        content = read_file(path_file_to_read)        
+        nouns = find_nouns(content)
+        answers = ask_nouns(nouns)        
+        merged_content = merge_file(content,nouns,answers)        
+        show_merged_content(merged_content)
+        save_to_new_file(merged_content)
+    except:
+        print("Error on doing the game.")
+    
+
+
+if __name__ == "__main__":    
+    path_file_to_read = "assets/script_one.txt"    
     do_game(path_file_to_read)
