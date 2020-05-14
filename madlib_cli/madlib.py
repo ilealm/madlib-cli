@@ -12,6 +12,15 @@ from textwrap import dedent
 # create a new file
 # write the compled script on the new file
 
+def merge_file(content,nouns_list,answer_list):
+    try:
+        for i in range(len(nouns_list)):
+            content = content.replace(("{" + nouns_list[i] + "}"), answer_list[i],1)
+        
+        return content
+
+    except Exception as e:
+        print('Error on merging the file.', e)
 
 def ask_nouns(nouns_list):
     answer_list = []
@@ -24,15 +33,13 @@ def ask_nouns(nouns_list):
             answer_list.append(answer)
             i+=1
 
-        print("\n1Thank you! now let's see your file!!!")
+        print("\nThank you! now let's see your file!!!")
         
         return answer_list
     except Exception as e:
         print("Error on asking nouns to the user.", e)
 
 def find_nouns(content):
-    # TODO:comment this list
-    content = "I the {Adjective} and {Noun} {A First Name} have {Past Tense Verb}{A First Name}'s {Adjective}"
     try:
         nouns_list = []
         start = content.find('{')
@@ -62,10 +69,17 @@ def read_file(path_file_to_read):
 
 def do_game(path_file_to_read):
     try:
-        content = read_file(path_file_to_read)
+        # content = read_file(path_file_to_read)
+        # TODO:comment this list
+        content = "I the {Adjective} and {Noun} {A First Name} have {Past Tense Verb} {A First Name}'s {Adjective}"
         nouns = find_nouns(content)
         # print('the nouns are', nouns)
-        answers = ask_nouns(nouns)
+        # TODO: UNCOMMENT THIS LINE:
+        # answers = ask_nouns(nouns)
+        answers = ['strong','chair','Ian','was','Emma','nice']
+        # print('answers are', answers)
+        merged_content = merge_file(content,nouns,answers)
+        # print(merged_content)
     except:
         print("Error on doing the game.")
     

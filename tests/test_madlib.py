@@ -1,4 +1,4 @@
-from madlib_cli.madlib import read_file, find_nouns
+from madlib_cli.madlib import read_file, find_nouns, merge_file
 
 
 def test_read_file_one():
@@ -14,7 +14,15 @@ def test_read_file_two():
 
 
 def test_find_nouns_one():
-  content = "I the {Adjective} and {Noun} {A First Name} have {Past Tense Verb}{A First Name}'s {Adjective}"
+  content = "I the {Adjective} and {Noun} {A First Name} have {Past Tense Verb} {A First Name}'s {Adjective}"
   actual = find_nouns(content)
   expected = ['Adjective','Noun','A First Name','Past Tense Verb','A First Name', 'Adjective']
+  assert actual == expected
+
+def test_merge_file_one():
+  content = "I the {Adjective} and {Noun} {A First Name} have {Past Tense Verb} {A First Name}'s {Adjective}"
+  nouns_list =  ['Adjective','Noun','A First Name','Past Tense Verb','A First Name', 'Adjective']
+  answer_list = ['strong','powerful','Ian','run','Emma', 'brave']
+  actual = merge_file(content, nouns_list,answer_list)
+  expected =  "I the strong and powerful Ian have run Emma's brave"
   assert actual == expected
